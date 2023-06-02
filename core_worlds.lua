@@ -141,6 +141,12 @@ end
 function OnPlayerRightClick(Player, BlockX, BlockY, BlockZ, BlockFace, CursorX, CursorY, CursorZ)
 	if not Player:HasPermission("core.spawnprotect.bypass") and IsInSpawn(BlockX, BlockY, BlockZ, Player:GetWorld():GetName()) then
 		local Block = Player:GetWorld():GetBlock(Vector3i(BlockX, BlockY, BlockZ))
+		
+		if BlockID == E_BLOCK_BED or BlockID == E_BLOCK_BED_BED_HEAD then
+		    Player:SetBedPos(Vector3i(BlockX, BlockY, BlockZ), Player:GetWorld())
+		    Player:SendMessageInfo("You have set your spawn!")
+		    return true
+		end
 
 		if Block == E_BLOCK_GRASS or Block == E_BLOCK_DIRT then
 			if Player:GetEquippedItem():IsEmpty() then
